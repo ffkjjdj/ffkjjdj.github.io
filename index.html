@@ -7,10 +7,53 @@
   <meta name="description" content="한국 학생 개발자 이현진의 자기소개 사이트">
   <link rel="stylesheet" href="style.css">
   <script src="main.js" defer></script>
-
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
-
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    /* 모바일/반응형 개선 */
+    @media (max-width: 900px) {
+      .container { padding: 0 10px !important; }
+      .nav-menu { flex-wrap: wrap; gap: 8px; font-size: 0.95em;}
+      .nav-inner { flex-direction: column; align-items: flex-start !important;}
+      .nav-logo { font-size: 1.3em;}
+      .hero-center { padding: 32px 0 24px; }
+      .hero h1 { font-size: 1.4em; }
+      .section-title { font-size: 1.2em; }
+      .about-cards, .skill-cards, .activity-cards { flex-direction: column !important; gap: 16px !important;}
+      .about-card, .skill-card, .activity-card { width: 100% !important; min-width: 0 !important;}
+      .leaderboard .lb-row { flex-direction: column; align-items: flex-start; gap: 6px; font-size: 1em;}
+      .contact-buttons { flex-direction: column; gap: 10px;}
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+      .footer, .container { padding: 0 4px !important; }
+      .section { padding: 24px 0 !important;}
+      .hero h1, .section-title { font-size: 1em !important;}
+      .hero-center { gap: 12px;}
+      .about-card, .skill-card, .activity-card { padding: 16px 8px !important;}
+      .contact-card, .contact-bottom-card { padding: 12px 8px !important;}
+      #music-toggle { padding: 8px 18px !important; font-size: 1em;}
+    }
+    /* 로고 SVG 스타일 */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #7c4dff;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      gap: 8px;
+      user-select: none;
+    }
+    .nav-logo svg {
+      height: 2.1em;
+      width: auto;
+      vertical-align: middle;
+      margin-right: 6px;
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
 
@@ -21,27 +64,21 @@
     <canvas id="bg-particles"></canvas>
   </div>
 
-
-
-
 <audio id="bgm" src="backbgm.mp3" loop autoplay></audio>
 
-
 <button id="music-toggle"
-  style="position:fixed; bottom:32px; right:32px; z-index:1000; background:linear-gradient(135deg,#ffb347 0%,#ffcc33 100%); color:#fff; border:none; border-radius:50px; padding:16px 32px; cursor:pointer; font-size:20px; box-shadow:0 4px 24px rgba(0,0,0,0.15); transition: transform 0.1s; outline: none;">
+  style="position:fixed; bottom:32px; right:32px; z-index:1000; background:linear-gradient(135deg,#ffb347 0%,#ffcc33 100%); color:#fff; border:none; border-radius:50px; padding:16px 32px; cursor:pointer; font-size:1.12em; box-shadow:0 4px 24px rgba(0,0,0,0.15);">
   🎵 노래 ON
 </button>
 <canvas id="particle-canvas" style="position:fixed;pointer-events:none;z-index:1500;left:0;top:0;" width="0" height="0"></canvas>
 
 <script>
-
 const bgm = document.getElementById('bgm');
 const toggleBtn = document.getElementById('music-toggle');
-
 function updateButton() {
   toggleBtn.textContent = (bgm.paused ? "🎵 노래 ON" : "🔇 노래 OFF");
-  toggleBtn.style.background = bgm.paused 
-    ? "linear-gradient(135deg,#ffb347 0%,#ffcc33 100%)" 
+  toggleBtn.style.background = bgm.paused
+    ? "linear-gradient(135deg,#ffb347 0%,#ffcc33 100%)"
     : "linear-gradient(135deg,#d9534f 0%,#f06292 100%)";
 }
 toggleBtn.onclick = function() {
@@ -54,15 +91,11 @@ toggleBtn.onclick = function() {
   }
   updateButton();
 };
-
-
 document.body.addEventListener("click", function playBgmOnce() {
   if (bgm.paused) bgm.play();
   updateButton();
   document.body.removeEventListener("click", playBgmOnce);
 });
-
-
 toggleBtn.onmouseenter = () => {
   toggleBtn.style.transform = "scale(1.08)";
   showParticles(toggleBtn, "#fff176");
@@ -70,19 +103,15 @@ toggleBtn.onmouseenter = () => {
 toggleBtn.onmouseleave = () => {
   toggleBtn.style.transform = "";
 };
-
-
 function showParticles(btn, color) {
   const rect = btn.getBoundingClientRect();
   const centerX = rect.left + rect.width/2;
   const centerY = rect.top + rect.height/2;
-
   const canvas = document.getElementById('particle-canvas');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   const ctx = canvas.getContext('2d');
   const particles = [];
-
   for(let i=0; i<15; i++){
     const angle = Math.random()*2*Math.PI;
     particles.push({
@@ -95,7 +124,6 @@ function showParticles(btn, color) {
       color: color || "#fff"
     });
   }
-
   let frame = 0;
   function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -118,28 +146,32 @@ function showParticles(btn, color) {
   }
   animate();
 }
-
-
 toggleBtn.animate([
   {boxShadow:'0 4px 24px rgba(0,0,0,0.15)'},
   {boxShadow:'0 0 40px 10px #ffe082'},
   {boxShadow:'0 4px 24px rgba(0,0,0,0.15)'}
 ],{duration:1800, iterations:Infinity});
-
-
 window.addEventListener("resize", ()=>{
   const canvas = document.getElementById('particle-canvas');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
 </script>
-
   
   <header class="navbar">
-    <div class="container nav-inner">
-      <a class="nav-logo" href="#">이현진</a>
+    <div class="container nav-inner" style="display:flex;align-items:center;justify-content:space-between;">
+      <a class="nav-logo" href="#">
+        <!-- SVG 로고 시작 -->
+        <svg width="40" height="40" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="이현진 로고">
+          <rect width="44" height="44" rx="13" fill="#7C4DFF"/>
+          <text x="22" y="27" text-anchor="middle" font-family="'Pretendard','Noto Sans KR',sans-serif" font-size="16" fill="#fff" font-weight="bold" letter-spacing="0.06em">이현진</text>
+          <circle cx="36" cy="10" r="4" fill="#FFD54F" opacity="0.95"/>
+          <path d="M13 37 Q20 29 31 36" stroke="#B388FF" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        </svg>
+        <!-- SVG 로고 끝 -->
+      </a>
       <nav>
-        <ul class="nav-menu">
+        <ul class="nav-menu" style="display:flex;gap:28px;list-style:none;margin:0;padding:0;">
           <li><a href="#home">홈</a></li>
           <li><a href="#about">소개</a></li>
           <li><a href="#skills">기술</a></li>
@@ -154,19 +186,18 @@ window.addEventListener("resize", ()=>{
     <div class="hero-center">
       <div class="hero-avatar pop-in">
         <span class="avatar-icon"> 
-          <svg width="56" height="56" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5" fill="#c6a6ff"/><ellipse cx="12" cy="18.5" rx="7.5" ry="3.5" fill="#ebe2fc"/><circle cx="12" cy="9" r="4" fill="#fff"/><path d="M12 13c-2.5 0-7 1.17-7 3.5V17h14v-.5C19 14.17 14.5 13 12 13z" fill="#e5d1fa"/></svg>
+          <svg width="56" height="56" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5" fill="#c6a6ff"/><ellipse cx="12" cy="18.5" rx="7.5" ry="3.5" fill="#ebe2fc"/><circle cx="12" cy="9" r="4" fill="#b39ddb"/></svg>
         </span>
         <span class="emoji-wave">👋</span>
       </div>
       <h1 class="slide-up">어서오세요! <span class="gradient-text">사이트방문을</span>환영합니다! <span class="emoji-wave">👋</span></h1>
       <div class="hero-desc fade-in">
-        취미로 코딩을 즐기고, 주로 <span class="txt-py">파이썬</span>, <span class="txt-lua">Lua</span>, <span class="txt-java">Java</span>를 사용하고있습니다!.
+        취미로 코딩을 하고있고, 주로 <span class="txt-py">파이썬</span>, <span class="txt-lua">Lua</span>, <span class="txt-java">Java</span>를 사용하고있습니다!.
       </div>
       <div class="hero-sub rainbow-text">♡ 함께 성장하는 개발자가 되려고 노력중입니다! ♡</div>
       <div class="hero-scroll bounce"><span>↓</span></div>
     </div>
   </section>
-
 
   <section class="section about" id="about">
     <div class="container about-cards">
@@ -190,7 +221,6 @@ window.addEventListener("resize", ()=>{
       </div>
     </div>
   </section>
-
 
   <section class="section" id="skills">
     <div class="container">
@@ -223,7 +253,6 @@ window.addEventListener("resize", ()=>{
     </div>
   </section>
 
-
   <section class="section" id="activities">
     <div class="container">
       <h2 class="section-title slide-up">주요 활동 분야</h2>
@@ -252,7 +281,6 @@ window.addEventListener("resize", ()=>{
       </div>
     </div>
   </section>
-
 
   <section class="section leaderboard-section">
     <div class="container">
@@ -286,16 +314,12 @@ window.addEventListener("resize", ()=>{
     </div>
   </section>
 
-  
-
   <section class="section contact-section" id="contact">
     <div class="container contact-container">
       <h2 class="section-title slide-up">연락하는방법</h2>
       <div class="section-desc fade-in">연락처들!</div>
       <div class="contact-card shadow-pop fade-in">
         <div class="contact-icon">
-
-          
           <i class="fa-regular fa-envelope"></i>
         </div>
         <div class="contact-title">항상! 연락을 기다립니다!</div>
@@ -305,11 +329,11 @@ window.addEventListener("resize", ()=>{
         </div>
         <div class="contact-buttons">
           <a href="https://www.instagram.com/lxhyjin/" target="_blank" class="btn insta wave-btn">
-            <span class="btn-icon"> <svg width="22" height="22" viewBox="0 0 24 24"><linearGradient id="a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f58529"/><stop offset="50%" stop-color="#dd2a7b"/><stop offset="100%" stop-color="#515bd4"/></linearGradient><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#a)"/><circle cx="12" cy="12" r="5" fill="#fff"/><circle cx="18" cy="6" r="1.2" fill="#fff"/></svg> </span>
+            <span class="btn-icon"> <svg width="22" height="22" viewBox="0 0 24 24"><linearGradient id="a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f58529"/><stop offset="50%" stop-color="#dd2a7b"/><stop offset="100%" stop-color="#515bd4"/></linearGradient><rect width="22" height="22" rx="6" fill="url(#a)"/><circle cx="11" cy="11" r="5" fill="#fff"/></svg></span>
             Instagram
           </a>
           <a href="https://github.com/ffkjjdj" target="_blank" class="btn github wave-btn">
-            <span class="btn-icon"> <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.31 6.84 9.66.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.37-3.37-1.37-.45-1.18-1.1-1.49-1.1-1.49-.89-.62.07-.6.07-.6 1 .07 1.52 1.06 1.52 1.06 .88 1.54 2.31 1.1 2.88.85.09-.65.34-1.1.62-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.74-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.03a9.26 9.26 0 0 1 2.5-.34c.85.01 1.7.11 2.5.34 1.91-1.31 2.75-1.03 2.75-1.03 .55 1.4.2 2.44.1 2.7.64.71 1.03 1.62 1.03 2.74 0 3.93-2.34 4.81-4.57 5.07.36.32.68.95.68 1.91 0 1.38-.01 2.49-.01 2.83 0 .27.18.58.69.48C19.13 20.57 22 16.76 22 12.26 22 6.58 17.52 2 12 2Z"/></svg> </span>
+            <span class="btn-icon"> <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.31 6.84 9.66.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71 0 0-2.78.61-3.37-1.17-.12-.29-.63-1.17-1.07-1.41-.37-.2-.89-.69-.01-.7.82-.01 1.41.76 1.6 1.08.94 1.6 2.44 1.14 3.04.87.09-.68.37-1.14.67-1.4-2.22-.25-4.56-1.12-4.56-4.99 0-1.1.39-2 .99-2.71-.1-.25-.43-1.27.09-2.65 0 0 .82-.27 2.7 1.02a9.16 9.16 0 0 1 2.46-.33c.84 0 1.69.11 2.48.33 1.87-1.29 2.69-1.02 2.69-1.02.53 1.38.2 2.4.1 2.65.61.71.99 1.61.99 2.71 0 3.88-2.34 4.73-4.57 4.98.38.33.71.95.71 1.92 0 1.39-.01 2.51-.01 2.85 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z"></path></svg></span>
             GitHub
           </a>
         </div>
@@ -323,15 +347,20 @@ window.addEventListener("resize", ()=>{
 
   <footer class="footer">
     <div class="container">
+      <div id="visitor-counter" style="margin-bottom:8px;color:#b39ddb;font-size:1em;"></div>
       © 2024 이현진. Made with <span class="footer-heart">♥</span> and lots of curiosity.
     </div>
   </footer>
+  <script>
+    // 방문자 카운터 (countapi.xyz 사용)
+    fetch('https://api.countapi.xyz/hit/ffkjjdj.github.io/visits')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('visitor-counter').textContent = `이 사이트는 ${data.value}명이 방문했습니다.`;
+      })
+      .catch(() => {
+        document.getElementById('visitor-counter').textContent = '방문자 수 확인 불가';
+      });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
