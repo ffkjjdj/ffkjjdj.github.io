@@ -317,7 +317,7 @@ window.addEventListener("resize", ()=>{
   <section class="section contact-section" id="contact">
     <div class="container contact-container">
       <h2 class="section-title slide-up">연락하는방법</h2>
-      <div class="section-desc fade-in">연락처들!</div>
+      <div class="section-desc fade-in">❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️</div>
       <div class="contact-card shadow-pop fade-in">
         <div class="contact-icon">
           <i class="fa-regular fa-envelope"></i>
@@ -352,11 +352,16 @@ window.addEventListener("resize", ()=>{
     </div>
   </footer>
   <script>
-<!-- 방문자 수 표시 영역 -->
-<span id="busuanzi_container_site_pv" style="color:#b39ddb;">
-  이 사이트는 <span id="busuanzi_value_site_pv"></span> 명이 방문했습니다.
-</span>
-<!-- busuanzi 스크립트 -->
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+fetch('https://api.visitor-count.dev/v1/ffkjjdj.github.io')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('visitor-counter').textContent = `이 사이트는 ${data.count}명이 방문했습니다.`;
+  })
+  .catch(() => {
+    document.getElementById('visitor-counter').textContent = '방문자 수 확인 불가';
+  });
+
 
 
