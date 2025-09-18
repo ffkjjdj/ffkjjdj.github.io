@@ -7,13 +7,13 @@
   <meta name="description" content="한국 학생 개발자 이현진의 자기소개 사이트">
   <link rel="stylesheet" href="style.css">
   <script src="main.js" defer></script>
-  <!-- Font Awesome CDN (envelope 아이콘 사용 가능) -->
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
-  <!-- 파비콘 적용 -->
+
   <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <!-- 배경 데코: 도형 & 파티클 -->
+
   <div class="bg-deco">
     <div class="bg-circle circle1"></div>
     <div class="bg-circle circle2"></div>
@@ -22,51 +22,119 @@
   </div>
 
 
-  <!-- 배경음악 (자동재생, 음소거로 시작) -->
-<audio id="bgm" src="backbgm.mp3" loop autoplay muted></audio>
 
-<!-- 오른쪽 하단 토글 버튼 -->
+
+<audio id="bgm" src="backbgm.mp3" loop autoplay></audio>
+
+
 <button id="music-toggle"
-  style="position:fixed; bottom:24px; right:24px; z-index:9999; background:#222; color:#fff; border:none; border-radius:20px; padding:10px 18px; cursor:pointer; font-size:16px;">
-  노래 ON
+  style="position:fixed; bottom:32px; right:32px; z-index:1000; background:linear-gradient(135deg,#ffb347 0%,#ffcc33 100%); color:#fff; border:none; border-radius:50px; padding:16px 32px; cursor:pointer; font-size:20px; box-shadow:0 4px 24px rgba(0,0,0,0.15); transition: transform 0.1s; outline: none;">
+  🎵 노래 ON
 </button>
+<canvas id="particle-canvas" style="position:fixed;pointer-events:none;z-index:1500;left:0;top:0;" width="0" height="0"></canvas>
 
 <script>
+
 const bgm = document.getElementById('bgm');
 const toggleBtn = document.getElementById('music-toggle');
 
-// 버튼 상태 반영 함수
 function updateButton() {
-  if (bgm.muted || bgm.paused) {
-    toggleBtn.textContent = '노래 ON';
-  } else {
-    toggleBtn.textContent = '노래 OFF';
-  }
+  toggleBtn.textContent = (bgm.paused ? "🎵 노래 ON" : "🔇 노래 OFF");
+  toggleBtn.style.background = bgm.paused 
+    ? "linear-gradient(135deg,#ffb347 0%,#ffcc33 100%)" 
+    : "linear-gradient(135deg,#d9534f 0%,#f06292 100%)";
 }
-
-// 버튼 클릭 이벤트
 toggleBtn.onclick = function() {
-  if (bgm.muted || bgm.paused) {
-    bgm.muted = false;
-    bgm.volume = 1;
-    // play()는 사용자 상호작용 후라서 브라우저에서 허용됨
+  if (bgm.paused) {
     bgm.play();
+    showParticles(toggleBtn, "#ffcc33");
   } else {
-    bgm.muted = true;
     bgm.pause();
+    showParticles(toggleBtn, "#d9534f");
   }
   updateButton();
 };
 
-// 모바일/크롬 정책 때문에, 첫 클릭 후에만 소리 재생 허용됨
-window.addEventListener('DOMContentLoaded', function() {
+
+document.body.addEventListener("click", function playBgmOnce() {
+  if (bgm.paused) bgm.play();
   updateButton();
+  document.body.removeEventListener("click", playBgmOnce);
+});
+
+
+toggleBtn.onmouseenter = () => {
+  toggleBtn.style.transform = "scale(1.08)";
+  showParticles(toggleBtn, "#fff176");
+};
+toggleBtn.onmouseleave = () => {
+  toggleBtn.style.transform = "";
+};
+
+
+function showParticles(btn, color) {
+  const rect = btn.getBoundingClientRect();
+  const centerX = rect.left + rect.width/2;
+  const centerY = rect.top + rect.height/2;
+
+  const canvas = document.getElementById('particle-canvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+  const particles = [];
+
+  for(let i=0; i<15; i++){
+    const angle = Math.random()*2*Math.PI;
+    particles.push({
+      x: centerX,
+      y: centerY,
+      r: 7+Math.random()*7,
+      dx: Math.cos(angle)*(40+Math.random()*30),
+      dy: Math.sin(angle)*(40+Math.random()*30),
+      alpha: 1,
+      color: color || "#fff"
+    });
+  }
+
+  let frame = 0;
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let p of particles){
+      p.x += p.dx*0.05;
+      p.y += p.dy*0.05;
+      p.alpha -= 0.028;
+      ctx.globalAlpha = Math.max(0, p.alpha);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 2*Math.PI);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+    }
+    frame++;
+    if(frame < 30){
+      requestAnimationFrame(animate);
+    } else {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+  }
+  animate();
+}
+
+
+toggleBtn.animate([
+  {boxShadow:'0 4px 24px rgba(0,0,0,0.15)'},
+  {boxShadow:'0 0 40px 10px #ffe082'},
+  {boxShadow:'0 4px 24px rgba(0,0,0,0.15)'}
+],{duration:1800, iterations:Infinity});
+
+
+window.addEventListener("resize", ()=>{
+  const canvas = document.getElementById('particle-canvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 });
 </script>
-  <!-- 또는 외부 음원 예시 -->
-  <!-- <audio src="https://cdn.pixabay.com/audio/2024/03/19/audio_19f5e1a7d7.mp3" controls loop></audio> -->
 
-  <!-- 네비게이션 -->
+  
   <header class="navbar">
     <div class="container nav-inner">
       <a class="nav-logo" href="#">이현진</a>
@@ -99,7 +167,7 @@ window.addEventListener('DOMContentLoaded', function() {
     </div>
   </section>
 
-  <!-- 소개 섹션 -->
+
   <section class="section about" id="about">
     <div class="container about-cards">
       <div class="about-card pop-in">
@@ -123,7 +191,7 @@ window.addEventListener('DOMContentLoaded', function() {
     </div>
   </section>
 
-  <!-- 기술 스택 섹션 -->
+
   <section class="section" id="skills">
     <div class="container">
       <h2 class="section-title slide-up">사용하는 코딩 언어</h2>
@@ -155,7 +223,7 @@ window.addEventListener('DOMContentLoaded', function() {
     </div>
   </section>
 
-  <!-- 활동 섹션 -->
+
   <section class="section" id="activities">
     <div class="container">
       <h2 class="section-title slide-up">주요 활동 분야</h2>
@@ -185,7 +253,7 @@ window.addEventListener('DOMContentLoaded', function() {
     </div>
   </section>
 
-  <!-- 리더보드 섹션 -->
+
   <section class="section leaderboard-section">
     <div class="container">
       <h2 class="section-title pop-in">🏆 나의 리더보드</h2>
@@ -218,14 +286,16 @@ window.addEventListener('DOMContentLoaded', function() {
     </div>
   </section>
 
-  <!-- 연락하기 섹션 -->
+  
+
   <section class="section contact-section" id="contact">
     <div class="container contact-container">
       <h2 class="section-title slide-up">연락하기</h2>
       <div class="section-desc fade-in">연락처</div>
       <div class="contact-card shadow-pop fade-in">
         <div class="contact-icon">
-          <!-- Font Awesome envelope 아이콘 예시 -->
+
+          
           <i class="fa-regular fa-envelope"></i>
         </div>
         <div class="contact-title">연락을 기다립니다!</div>
@@ -258,6 +328,7 @@ window.addEventListener('DOMContentLoaded', function() {
   </footer>
 </body>
 </html>
+
 
 
 
