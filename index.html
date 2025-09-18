@@ -7,10 +7,12 @@
   <meta name="description" content="한국의 학생 개발자 이현진의 자기소개 사이트">
   <link rel="stylesheet" href="style.css">
   <script src="main.js" defer></script>
-  <link rel="icon" href="favicon.ico">
+  <!-- Font Awesome CDN (envelope 아이콘 사용 가능) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+  <!-- 파비콘 적용 -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <!-- 배경 데코: 도형 & 파티클 -->
   <div class="bg-deco">
     <div class="bg-circle circle1"></div>
@@ -19,10 +21,10 @@
     <canvas id="bg-particles"></canvas>
   </div>
 
-  <!-- 배경음악 (컨트롤 제공) -->
-  <audio id="bgm" src="https://cdn.pixabay.com/audio/2024/03/19/audio_19f5e1a7d7.mp3" loop></audio>
-  <button id="bgm-btn" title="배경음악 재생/일시정지"><span id="bgm-icon">🎵</span></button>
-  <audio src="music.mp3" autoplay loop></audio>
+  <!-- 배경음악 (controls 포함, 자동재생은 브라우저에 따라 동작하지 않을 수 있음) -->
+  <audio src="music.mp3" controls loop></audio>
+  <!-- 또는 외부 음원 예시 -->
+  <!-- <audio src="https://cdn.pixabay.com/audio/2024/03/19/audio_19f5e1a7d7.mp3" controls loop></audio> -->
 
   <!-- 네비게이션 -->
   <header class="navbar">
@@ -48,7 +50,7 @@
         </span>
         <span class="emoji-wave">👋</span>
       </div>
-      <h1 class="slide-up">안녕하세요! <span class="gradient-text">이현진</span>입니다 <span class="emoji-wave">👋</span></h1>
+      <h1 class="slide-up">어서오세! <span class="gradient-text">사이트방문을</span>환영합니다! <span class="emoji-wave">👋</span></h1>
       <div class="hero-desc fade-in">
         취미로 코딩을 즐기고, 주로 <span class="txt-py">파이썬</span>, <span class="txt-lua">Lua</span>, <span class="txt-java">Java</span>를 다룹니다.
       </div>
@@ -182,8 +184,11 @@
       <h2 class="section-title slide-up">연락하기</h2>
       <div class="section-desc fade-in">연락처</div>
       <div class="contact-card shadow-pop fade-in">
-        <div class="contact-icon">💬</div>
-        <div class="contact-title">소통을 기다려요!</div>
+        <div class="contact-icon">
+          <!-- Font Awesome envelope 아이콘 예시 -->
+          <i class="fa-regular fa-envelope"></i>
+        </div>
+        <div class="contact-title">연락을 기다립니다!</div>
         <div class="contact-desc">
           개발에 대한 이야기나 협업 제안, 제게 부족한점 등!<br>
           언제든지 편하게 연락해주세요!
@@ -193,7 +198,7 @@
             <span class="btn-icon"> <svg width="22" height="22" viewBox="0 0 24 24"><linearGradient id="a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f58529"/><stop offset="50%" stop-color="#dd2a7b"/><stop offset="100%" stop-color="#515bd4"/></linearGradient><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#a)"/><circle cx="12" cy="12" r="5" fill="#fff"/><circle cx="18" cy="6" r="1.2" fill="#fff"/></svg> </span>
             Instagram
           </a>
-          <a href="https://github.com/이현진" target="_blank" class="btn github wave-btn">
+          <a href="https://github.com/ffkjjdj" target="_blank" class="btn github wave-btn">
             <span class="btn-icon"> <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.31 6.84 9.66.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.61-3.37-1.37-3.37-1.37-.45-1.18-1.1-1.49-1.1-1.49-.89-.62.07-.6.07-.6 1 .07 1.52 1.06 1.52 1.06 .88 1.54 2.31 1.1 2.88.85.09-.65.34-1.1.62-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.74-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.03a9.26 9.26 0 0 1 2.5-.34c.85.01 1.7.11 2.5.34 1.91-1.31 2.75-1.03 2.75-1.03 .55 1.4.2 2.44.1 2.7.64.71 1.03 1.62 1.03 2.74 0 3.93-2.34 4.81-4.57 5.07.36.32.68.95.68 1.91 0 1.38-.01 2.49-.01 2.83 0 .27.18.58.69.48C19.13 20.57 22 16.76 22 12.26 22 6.58 17.52 2 12 2Z"/></svg> </span>
             GitHub
           </a>
@@ -212,6 +217,4 @@
     </div>
   </footer>
 </body>
-
 </html>
-
