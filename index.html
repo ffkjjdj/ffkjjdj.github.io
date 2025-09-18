@@ -354,14 +354,11 @@ window.addEventListener("resize", ()=>{
   <script>
     
 
-fetch('https://api.visitor-count.dev/v1/ffkjjdj.github.io')
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('visitor-counter').textContent = `이 사이트는 ${data.count}명이 방문했습니다.`;
-  })
-  .catch(() => {
-    document.getElementById('visitor-counter').textContent = '방문자 수 확인 불가';
-  });
+<span id="busuanzi_container_site_pv" style="color:#b39ddb;">
+  이 사이트는 <span id="busuanzi_value_site_pv"></span> 명이 방문했습니다.
+</span>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
 
 
 
